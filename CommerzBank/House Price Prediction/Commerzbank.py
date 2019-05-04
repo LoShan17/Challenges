@@ -66,12 +66,12 @@ if __name__ == '__main__':
     region_summary = train.groupby('Region').median()['SalePrice'].sort_values()
     region_summary.plot()
     plt.show()
-    
+
     saledate_summary = train.groupby('SaleDate').median()['SalePrice'].sort_values()
     train['SaleDateDate'] = train['SaleDate'].apply(lambda x: datetime.datetime.strptime(x, '%d/%m/%Y'))
     saledatedate_summary = train.groupby('SaleDateDate').median()['SalePrice'].sort_index()
     saledatedate_summary.plot()
-    plt.show()   
+    plt.show()
     # nothing here
 
     # variable encoding
@@ -126,7 +126,7 @@ if __name__ == '__main__':
     print('XGBoost out of sample')
     predictions = xgb.predict(X_test)
     R2out = r2_score(y_test, predictions)
-    mseout = mean_squared_error(y_test, predictions)   
+    mseout = mean_squared_error(y_test, predictions)
     print('R Squared: ', str(R2out))
     print('mean square error: ', str(mseout))
     print()
@@ -144,6 +144,8 @@ if __name__ == '__main__':
     ### preparing test data and predictions ###
     ###########################################
     test.replace(encoding, inplace=True)
+    for feature in ['floorsqm', 'Landsqm']:
+        test[feature] = test[feature].apply(np.log1p)
     X_final = test[selected_train_columns].to_numpy()
     final_predictions = np.floor(np.expm1(xgb.predict(X_final)))
     submission = test[['PropertyID']]
@@ -184,9 +186,3 @@ if __name__ == '__main__':
     print(R2_ridge)
     print(mse_ridge)
     print()
-
-
-    
-
-
-
