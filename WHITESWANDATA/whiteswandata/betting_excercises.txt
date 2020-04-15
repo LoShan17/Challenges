@@ -1,0 +1,115 @@
+#######
+## 1 ##
+
+1.1
+* horse wins
+turnover = 100, PnL = 300, RoI = 300%
+* horse loses
+turnover = 100, PnL = -100, RoI = -100%
+
+1.2
+* horse wins
+turnover = 100, PnL = -300, RoI = -300%
+* horse loses
+turnover = 100, PnL = 100, RoI = 100%
+
+1.3
+a bet is a zero sum game (excluding commissions).
+Therefore PNL numbers are the same with opposite sign.
+
+#######
+## 2 ##
+
+EV formula is P(W) * $win - P(L) * $lose
+
+2.1 (backing)
+* 2.0.
+EV = -50, Expected RoI = -50%
+* 3.0.
+EV = -25, Expected RoI = -25%
+* 4.0.
+EV = 0, Expected RoI = 0%
+* 5.0.
+EV = 25, Expected RoI = 25%
+* 6.0.
+EV = 50, Expected RoI = 50%
+
+2.2 (laying)
+* 2.0.
+EV = 50, Expected RoI = 50%
+* 3.0.
+EV = 25, Expected RoI = 25%
+* 4.0.
+EV = 0, Expected RoI = 0%
+* 5.0.
+EV = -25, Expected RoI = -25%
+* 6.0.
+EV = -50, Expected RoI = -50%
+
+2.3
+The fair price for the bet is 4.0 because is the price at which both laying and backing
+have 0 expected value. Also 25% is the implied probability of 4.0 odds.
+
+#######
+## 3 ##
+(A professional gambler wants to bet on a horse that they believe has a 25% chance of winning.
+The gambler has a £100,000 bank and bets full Kelly.)
+Calculate: side (back or lay), stake, EV and expected RoI
+
+overlay = [P(W) * odds - 1] or [P(W) * (odds -1) - P(L)], {P(L) - (P(W) * odds -1) for laying}
+Full Kelly = overlay/(odds - 1)
+
+3.1
+* 2.0.
+side = lay, stake = 50000, EV = 25000, expected RoI = 50%
+* 3.0.
+side = lay, stake = 12500, EV = 3125, expected RoI = 25%
+* 4.0.
+side = None, stake = 0, EV = 0, expected RoI = 0
+* 5.0.
+side = back, stake = 6250, EV = 1562.5, expected RoI = 25%
+* 6.0.
+side = back, stake = 10000, EV = 5000, expected RoI = 50%
+
+3.2
+I am not sure if I understood this correctly. But the longest price is 60 since any longer odd
+would imply a negative expected value for the bookmaker, assuming that the fair price of 60 is correct.
+The 0.2% of backers’ stakes should not change expectation.
+
+#######
+## 4 ##
+A gambler opened a position by backing a horse to win with £100 stake when the price was 6.0.
+The price has shortened to 5.0 (implied 20%), which the gambler believes to be the fair price.
+Calculate: turnover, PnL and RoI (each outcome)
+Calculate: EV and expected RoI
+
+4.1
+* horse wins
+turnover = 100, Pnl = 500, RoI = 500%
+* horse loses
+turnover = 100, Pnl = -100, RoI = -100%
+
+EV = 20, expected RoI = 20%
+
+4.2
+The gambler closes the position by laying the horse to win with £120 stake at price 5.0.
+* horse wins
+turnover = 220, Pnl = 20, RoI = 9.1%
+* horse loses
+turnover = 220, Pnl = 20, RoI = 9.1%
+
+EV = 20, expected RoI = 9.1%
+
+4.3
+What is the same about the open and closed positions? What is different?
+* EV is the same in the two cases. Expected RoI is higher if keeping the position open,
+but the volatility of the Pnl is also much higher.
+
+What are the advantages and disadvantages of closing a position?
+* the main advantage is locking in a profit (or loss) and reducing volatility.
+If done properly and consistently greening up should allow to trade bigger increasing the turnover.
+As downside it increases the complexity of the strategy in both execution and backtesting/simulation.
+
+How did the gambler calculate the stake to close the position?
+* (initial odds * initial stake) / closing odds
+which is 100 * 6 / 5 = 120
